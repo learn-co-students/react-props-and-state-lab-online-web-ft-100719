@@ -15,6 +15,12 @@ class App extends React.Component {
     }
   }
 
+  onAdoptPet = id =>{
+    this.setState({
+      pets: this.state.pets.map( pet => pet.id === id ? {...pet, isAdopted: true} : pet)
+    }) 
+  }
+
   handleChange = (e) => {
     this.setState({
       filters: {
@@ -24,19 +30,16 @@ class App extends React.Component {
     )}
   
   handleClick = () => {
-    // console.log(event.target.className)
     if (this.state.filters.type === 'all'){
-      // console.log("we abouta filter All")
       fetch('/api/pets')
       .then(resp => resp.json())
       .then((pets) => {
         this.setState({
           pets: pets
         })
-        // ,() => console.log(this.state.pets)
       })
      
-    } else if (this.state.filters.type === this.state.filters.type){
+    } else if (this.state.filters.type !== "all"){
       // console.log('this will get rendered')
       fetch(`/api/pets?type=${this.state.filters.type}`)
       .then(resp => resp.json())
@@ -60,7 +63,7 @@ class App extends React.Component {
               <Filters onChangeType={this.handleChange} onFindPetsClick={this.handleClick}/>
             </div>
             <div className="twelve wide column">
-              <PetBrowser pets={this.state.pets}/>
+              <PetBrowser pets={this.state.pets} onAdoptPet={this.onAdoptPet}/>
             </div>
           </div>
         </div>
