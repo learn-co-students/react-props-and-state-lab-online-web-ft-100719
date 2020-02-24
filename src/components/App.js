@@ -44,8 +44,6 @@ class App extends React.Component {
     adoptedPet.isAdopted = true
     let modifyPets = this.state.pets
     modifyPets[petIndex] = adoptedPet
-    console.log('old pet state was' + this.state.pets)
-    console.log('new pets state should be: ' + modifyPets)
     this.setState(prevState => {
       return {
         ...prevState,
